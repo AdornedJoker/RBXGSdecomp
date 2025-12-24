@@ -25,8 +25,8 @@ namespace RBX
 
 		void Server::stop(int blockDuration)
 		{
-			if(this->rakPeer.get()->IsActive())
-				this->rakPeer.get()->Shutdown(blockDuration);
+			if(this->rakPeer->IsActive())
+				this->rakPeer->Shutdown(blockDuration);
 
 			Instance::removeAllChildren();
 		}
