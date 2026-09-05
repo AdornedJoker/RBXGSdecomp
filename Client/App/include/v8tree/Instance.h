@@ -387,6 +387,23 @@ namespace RBX
 
 		template<typename Type>
 		Type* findFirstChildOfType() const;
+
+		template<typename Function>
+		void visitDescendents(Function func) const
+		{
+			if (children)
+			{
+				boost::shared_ptr<const std::vector<boost::shared_ptr<Instance>>> c = children.read();
+				std::vector<boost::shared_ptr<Instance>>::const_iterator end = c->end();
+				std::vector<boost::shared_ptr<Instance>>::const_iterator iter = c->begin();
+
+				for (; iter != end; iter++)
+				{
+					func(*iter);
+					(*iter)->visitDescendents(func);
+				}
+			}
+		}
 	  
 	private:
 		static void predelete(Instance* instance);
@@ -396,8 +413,8 @@ namespace RBX
 		static Instance* getRootAncestor(Instance*);
 		static const Instance* getRootAncestor(const Instance*);
 	private:
-		static void signalDescendentAdded(Instance*, Instance*, Instance*);
-		static void signalDescendentRemoving(const boost::shared_ptr<Instance>&, Instance*, Instance*);
+		static void signalDescendentAdded(Instance* instance, Instance* beginParent, Instance* oldParent);
+		static void signalDescendentRemoving(const boost::shared_ptr<Instance>& instance, Instance* beginParent, Instance* newParent);
 	public:
 		// NOTE: This is entirely inlined. See assertions in later client builds.
 		template<typename To>
