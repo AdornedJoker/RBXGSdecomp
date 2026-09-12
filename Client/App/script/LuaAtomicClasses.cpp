@@ -560,7 +560,6 @@ int CoordinateFrameBridge::on_pointToObjectSpace(lua_State *L)
     return count;
 }
 
-
 int CoordinateFrameBridge::on_vectorToWorldSpace(lua_State* L)
 {
     G3D::CoordinateFrame& a = getObject(L, 1);
