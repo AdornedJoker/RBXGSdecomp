@@ -109,7 +109,7 @@ namespace RBX
 		bool zoomExtents(const G3D::Rect2D& viewPort);
 		void panRadians(float angle);
 		void panUnits(int);
-		bool tiltRadians(float);
+		bool tiltRadians(float angle);
 		bool tiltUnits(int);
 		void lookAt(const G3D::Vector3& point);
 		void setImageServerViewNoLerp(const G3D::CoordinateFrame& modelCoord, const G3D::Rect2D& viewPort);

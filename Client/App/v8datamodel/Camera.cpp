@@ -177,6 +177,27 @@ namespace RBX
 		}
 	}
 
+	bool Camera::tiltRadians(float angle)
+	{
+		if (angle != 0)
+		{
+			float heading, elevation, distance;
+			getHeadingElevationDistance(heading, elevation, distance);
+
+			static float rad = G3D::toRadians(81);
+			float newElevation = G3D::clamp(elevation + angle, -rad, rad);
+
+			if (elevation != newElevation)
+			{
+				setHeadingElevationDistance(heading, newElevation, distance);
+				tellCameraMoved();
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	void Camera::updateFocus()
 	{
 		Instance* instance = getCameraSubjectInstance();
