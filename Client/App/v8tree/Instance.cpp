@@ -1,5 +1,6 @@
 #include "v8tree/Instance.h"
 #include "reflection/function.h"
+#include "reflection/property.h"
 #include <algorithm>
 
 namespace RBX
@@ -347,6 +348,25 @@ namespace RBX
 			for (std::vector<boost::shared_ptr<Instance>>::const_iterator iter = c->begin(); iter != c->end(); iter++)
 			{
 				signalDescendentRemoving((*iter), beginParent, newParent);
+			}
+		}
+	}
+
+	//96.19% matching.
+	void Instance::readProperty(const XmlElement* propertyElement, IReferenceBinder& binder)
+	{
+		const Name* value = NULL;
+
+		if (const XmlAttribute* attribute = propertyElement->findAttribute(name_name))
+		{
+			if (attribute->getValue(value))
+			{
+				Reflection::PropertyIterator iter = findProperty(*value);
+
+				if (iter != properties_end())
+				{
+					(*iter).read(propertyElement, binder);
+				}
 			}
 		}
 	}

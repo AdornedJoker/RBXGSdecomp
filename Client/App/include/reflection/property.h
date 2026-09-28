@@ -115,7 +115,10 @@ namespace RBX
 				return const_cast<DescribedBase*>(instance); // might not be right
 			}
 			bool setStringValue(const std::string&);
-			void read(const XmlElement*, IReferenceBinder&);
+			void read(const XmlElement* propertyElement, IReferenceBinder& binder)
+			{
+				descriptor->read(getInstance(), propertyElement, binder);
+			}
 
 		public:
 			template<typename T>
