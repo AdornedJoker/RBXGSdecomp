@@ -370,4 +370,30 @@ namespace RBX
 			}
 		}
 	}
+
+	//96.86% matching.
+	XmlElement* Instance::write()
+	{
+		if (archivable)
+		{
+			if (getClassName() != Name::getNullName())
+			{
+				XmlElement* element = new XmlElement(tag_Item);
+				element->addAttribute(tag_class, &getClassName());
+				element->addAttribute(name_referent, InstanceHandle(this));
+
+				writeProperties(element->addChild(tag_Properties));
+				writeChildren(element);
+
+				return element;
+			}
+		}
+		else
+		{
+			XmlElement* element = new XmlElement(tag_External, InstanceHandle(this));	
+			return element;
+		}
+
+		return NULL;
+	}
 }
