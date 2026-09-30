@@ -304,7 +304,11 @@ namespace RBX
 		  
 		public:
 			template<typename GetFunction, typename SetFunction>
-			EnumPropDescriptor(char const* name, char const* category, typename GetFunction get, typename SetFunction set, Functionality flags);
+			EnumPropDescriptor(char const* name, char const* category, typename GetFunction get, typename SetFunction set, Functionality flags)
+				: EnumPropertyDescriptor(Class::classDescriptor(), EnumDesc<Enum>::singleton(), name, category, flags),
+				  getset(PropDescriptor<Class, Enum>::getset<GetFunction, SetFunction>(get, set))
+			{
+			}
 		public:
 			virtual bool isReadOnly() const
 			{

@@ -209,7 +209,11 @@ namespace RBX
 			virtual bool setEnumValue(DescribedBase*, int) const = 0;
 
 		protected:
-			EnumPropertyDescriptor(ClassDescriptor&, const EnumDescriptor&, const char*, const char*, Functionality);
+			EnumPropertyDescriptor(ClassDescriptor& classDescriptor, const EnumDescriptor& enumDesc, const char* name, const char* category, Functionality flags)
+				: PropertyDescriptor(classDescriptor, enumDesc, name, category, flags),
+				  enumDescriptor(enumDesc)
+			{
+			}
 		};
 	}
 }
