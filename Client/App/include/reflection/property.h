@@ -89,7 +89,10 @@ namespace RBX
 			ConstProperty& operator=(const ConstProperty&);
 			const Name& getName() const;
 			bool hasStringValue() const;
-			std::string getStringValue() const;
+			std::string getStringValue() const
+			{
+				return descriptor->getStringValue(instance);
+			}
 			XmlElement* write() const;
 
 		public:
