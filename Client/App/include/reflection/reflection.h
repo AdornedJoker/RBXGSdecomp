@@ -383,7 +383,10 @@ namespace RBX
 				return false;
 			}
 			virtual void readValue(DescribedBase*, const XmlElement*, IReferenceBinder&) const;
-			virtual void writeValue(const DescribedBase*, XmlElement*) const;
+			virtual void writeValue(const DescribedBase* instance, XmlElement* element) const
+			{
+				element->setValue(getValue(instance));
+			}
 		};
 
 		// BoundFuncDesc

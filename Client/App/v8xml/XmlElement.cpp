@@ -246,6 +246,13 @@ void XmlNameValuePair::setValue(RBX::InstanceHandle handle)
 	valueType = HANDLE;
 }
 
+void XmlNameValuePair::setValue(int value)
+{
+	clearValue();
+	intValue = value;
+	valueType = INT;
+}
+
 template<>
 bool XmlNameValuePair::isValueType<RBX::ContentId>() const
 {
