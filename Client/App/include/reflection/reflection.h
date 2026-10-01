@@ -382,7 +382,43 @@ namespace RBX
 
 				return false;
 			}
-			virtual void readValue(DescribedBase*, const XmlElement*, IReferenceBinder&) const;
+			virtual void readValue(DescribedBase* instance, const XmlElement* element, IReferenceBinder& binder) const
+			{
+				if (!element->isXsiNil())
+				{
+					if (element->isValueType<std::string>())
+					{
+						std::string text;
+						if (element->getValue(text))
+						{
+							Enum val;
+							if (EnumDesc<Enum>::singleton().convertToValue(text, val))
+							{
+								setValue(instance, val);
+								return;
+							}
+
+							if (text.size() == 0)
+							{
+								if (setIndexValue(instance, 0))
+								{
+									return;
+								}
+							}
+						}
+					}
+
+					int value;
+					if (element->getValue(value))
+					{
+						setValue(instance, (Enum) value);
+					}
+					else
+					{
+						RBXASSERT(false);
+					}
+				}
+			}
 			virtual void writeValue(const DescribedBase* instance, XmlElement* element) const
 			{
 				element->setValue(getValue(instance));
