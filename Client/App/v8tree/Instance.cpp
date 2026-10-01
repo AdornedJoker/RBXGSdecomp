@@ -371,7 +371,6 @@ namespace RBX
 		}
 	}
 
-	//96.86% matching.
 	XmlElement* Instance::write()
 	{
 		if (archivable)
@@ -388,12 +387,7 @@ namespace RBX
 				return element;
 			}
 		}
-		else
-		{
-			XmlElement* element = new XmlElement(tag_External, InstanceHandle(this));	
-			return element;
-		}
 
-		return NULL;
+		return new XmlElement(tag_External, InstanceHandle(this));
 	}
 }
