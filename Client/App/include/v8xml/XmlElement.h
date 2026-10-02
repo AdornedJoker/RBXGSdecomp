@@ -149,7 +149,12 @@ public:
 	void setValue(float);
 	void setValue(bool);
 	void setValue(unsigned);
-	void setValue(int);
+	void setValue(int value)
+	{
+		clearValue();
+		intValue = value;
+		valueType = INT;
+	}
 	void setValue(const char*);
 	void setValue(RBX::ContentId);
 	void setValue(std::string);
