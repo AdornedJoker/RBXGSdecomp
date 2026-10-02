@@ -389,7 +389,7 @@ namespace RBX
 		}
 
 		return new XmlElement(tag_External, InstanceHandle(this));
-  }
+	}
   
 	void Instance::setParent(Instance* newParent)
 	{
