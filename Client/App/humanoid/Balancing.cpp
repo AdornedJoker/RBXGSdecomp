@@ -35,4 +35,20 @@ namespace RBX
 			return NULL;
 		}
 	}
+
+	G3D::Vector3 Balancing::getYAxis() const
+	{
+		Body* torsoBody = humanoid->getTorsoBody();
+
+		if (torsoBody)
+		{
+			G3D::Vector3 yAxis = torsoBody->getCoordinateFrame().vectorToObjectSpace(G3D::Vector3::unitY());
+			return yAxis;
+		}
+		else
+		{
+			RBXASSERT(false);
+			return G3D::Vector3::unitY();
+		}
+	}
 }
