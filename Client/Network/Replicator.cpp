@@ -90,7 +90,13 @@ FilePacketLogger::FilePacketLogger(RBX::Network::Peer* peer)
 		RBX::StandardOut::singleton()->print(RBX::MESSAGE_WARNING, "Failed to create log file %s", pathName.c_str());
 	}
 }
-	
+
+FilePacketLogger::~FilePacketLogger()
+{
+	if (packetLogFile)
+		fclose(packetLogFile);
+}
+
 void FilePacketLogger::OnAttach(RakPeerInterface* peer)
 {
 	PacketLogger::OnAttach(peer);
@@ -597,15 +603,14 @@ namespace RBX
 
 				if (deserializeProperty)
 				{
-					const DescribedBase* inst = static_cast<DescribedBase*>(instance.get()); // force static cast outside of the RBXASSERT block
-					RBXASSERT(descriptor->isMemberOf(inst));
-
-					if (descriptor == &deserializeProperty->getDescriptor() && inst == deserializeProperty->getInstance())
+					Reflection::Property prop(*descriptor, instance.get());
+					if (prop == *deserializeProperty)
 						isDeserializeProperty = true;
 				}
 				
 				if (!isDeserializeProperty && (descriptor->canStreamWrite() || descriptor == &Instance::propParent) && !isSerializePending(instance.get()))
 				{
+					// ideally this should also be a ConstProperty/Property but i couldnt get the constructor to inline with it
 					const DescribedBase* inst = static_cast<DescribedBase*>(instance.get());
 					RBXASSERT(descriptor->isMemberOf(inst));
 
