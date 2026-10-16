@@ -155,4 +155,29 @@ namespace RBX
 	{
 		flagStands.remove(s);
 	}
+
+	//93.78% matching.
+	FlagStand* FlagStandService::FindClosestEmptyStandForFlag(Flag* f)
+	{
+		if (flagStands.empty())
+			return NULL;
+
+		std::vector<FlagStand*> possibleLocations;
+		
+		for (std::list<FlagStand*>::const_iterator iter = flagStands.begin(); iter != flagStands.end(); iter++)
+		{
+			if ((*iter)->teamColor.asInt() == f->getTeamColor().asInt())
+			{
+				if ((*iter)->GetFlag() == NULL)
+				{
+					possibleLocations.push_back((*iter));
+				}
+			}
+		}
+
+		if (possibleLocations.empty())
+			return NULL;
+
+		return possibleLocations[rand() % possibleLocations.size()];
+	}
 }
