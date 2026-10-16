@@ -56,6 +56,6 @@ namespace RBX
 		float var2 = kTurnAccelMax * rootBody->getBranchIBodyV3().y;
 		desiredTorqueY = G3D::clamp(desiredTorqueY, -var2, var2);
 
-		rootBody->accumulateTorque(G3D::Vector3(0, desiredTorqueY, 0));
+		rootBody->accumulateTorque(G3D::Vector3(0.0f, desiredTorqueY, 0.0f));
 	}
 }
