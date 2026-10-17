@@ -109,7 +109,7 @@ namespace RBX
 			void deserializeId(RakNet::BitStream& stream, Guid::Data& id);
 			void resolvePendingBindings(Instance* instance, Guid::Data id);
 			bool deserializeInstanceRef(RakNet::BitStream&, Instance*&);
-			bool deserializeInstanceRef(RakNet::BitStream&, Instance*&, Guid::Data&);
+			bool deserializeInstanceRef(RakNet::BitStream& stream, Instance*& instance, Guid::Data& id);
 			size_t numWaitingRefs() const
 			{
 				return waitItems.size();
