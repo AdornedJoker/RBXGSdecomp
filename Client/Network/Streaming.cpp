@@ -448,5 +448,31 @@ namespace RBX
 				id.index = 0;
 			}
 		}
+
+		bool IdSerializer::deserializeInstanceRef(RakNet::BitStream& stream, Instance*& instance, Guid::Data& id)
+		{
+			scopeNames.receive(stream, id.scope);
+
+			if ((*id.scope) != Name::getNullName())
+			{
+				id.index = 0;
+				stream.ReadBits((unsigned char*)&id.index, 24);
+			}
+			else
+			{
+				id.index = 0;
+			}
+
+			if ((*id.scope) != Name::getNullName())
+			{
+				instance = ServiceProvider::create<IdManager>(this)->getInstance(id);
+				return instance != NULL;
+			}
+			else
+			{
+				instance = NULL;
+				return true;
+			}
+		}
 	}
 }
