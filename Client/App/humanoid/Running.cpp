@@ -95,19 +95,10 @@ namespace RBX
 				desiredAltitude += humanoid->getRightLegPrimitive()->getGeometry()->getGridSize().y;
 			}
 
-			Velocity* vel;
+			Velocity vel = (!floorPart) ? Velocity::zero() : floorPart->getPrimitive()->getBody()->getPV().velocityAtPoint(floorTouchInWorld);
 
-			if (!floorPart)
-			{
-				vel = const_cast<Velocity*>(&Velocity::zero());
-			}
-			else
-			{
-				vel = &floorPart->getPrimitive()->getBody()->getPV().velocityAtPoint(floorTouchInWorld);
-			}
-
-			G3D::Vector3 floorVel = vel->linear;
-			G3D::Vector3 floorRotVel = vel->rotational;
+			G3D::Vector3 floorVel = vel.linear;
+			G3D::Vector3 floorRotVel = vel.rotational;
 
 			floorVelocity = floorVel;
 			floorRotationalVelocity = floorRotVel.y;
