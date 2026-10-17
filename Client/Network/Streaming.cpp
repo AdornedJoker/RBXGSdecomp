@@ -135,6 +135,16 @@ namespace RBX
 			return stream;
 		}
 
+		RakNet::BitStream& operator>>(RakNet::BitStream& stream, ContentId& value)
+		{
+			std::string id;
+			stream >> id;
+
+			value = ContentId(id);
+
+			return stream;
+		}
+
 		template<typename T>
 		RakNet::BitStream& operator>>(RakNet::BitStream& stream, T& value) // TODO: check match
 		{

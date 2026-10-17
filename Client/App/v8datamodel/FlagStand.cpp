@@ -61,6 +61,11 @@ namespace RBX
 		return NULL;
 	}
 
+	bool FlagStand::HasFlag()
+	{
+		return GetFlag() != NULL;
+	}
+
 	void FlagStand::onServiceProvider(const ServiceProvider* oldProvider, const ServiceProvider* newProvider)
 	{
 		Instance::onServiceProvider(oldProvider, newProvider);
@@ -156,7 +161,6 @@ namespace RBX
 		flagStands.remove(s);
 	}
 
-	//93.78% matching.
 	FlagStand* FlagStandService::FindClosestEmptyStandForFlag(Flag* f)
 	{
 		if (flagStands.empty())
@@ -168,7 +172,7 @@ namespace RBX
 		{
 			if ((*iter)->teamColor.asInt() == f->getTeamColor().asInt())
 			{
-				if ((*iter)->GetFlag() == NULL)
+				if (!(*iter)->HasFlag())
 				{
 					possibleLocations.push_back((*iter));
 				}

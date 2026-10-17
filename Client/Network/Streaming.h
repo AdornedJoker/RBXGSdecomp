@@ -17,7 +17,12 @@ namespace RBX
 		void serialize(const Reflection::ConstProperty&, RakNet::BitStream&);
 
 		template<typename T>
-		void deserialize(Reflection::Property&, RakNet::BitStream&);
+		void deserialize(Reflection::Property& property, RakNet::BitStream& bitStream)
+		{
+			T value;
+			operator>><T>(bitStream, value);
+			property.setValue<T>(value);
+		}
 
 		void serializeEnum(const Reflection::ConstProperty& property, RakNet::BitStream& bitStream);
 		void deserializeEnum(Reflection::Property& property, RakNet::BitStream& bitStream);
