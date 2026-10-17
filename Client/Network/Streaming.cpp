@@ -451,18 +451,7 @@ namespace RBX
 
 		bool IdSerializer::deserializeInstanceRef(RakNet::BitStream& stream, Instance*& instance, Guid::Data& id)
 		{
-			scopeNames.receive(stream, id.scope);
-
-			if ((*id.scope) != Name::getNullName())
-			{
-				id.index = 0;
-				stream.ReadBits((unsigned char*)&id.index, 24);
-			}
-			else
-			{
-				id.index = 0;
-			}
-
+			deserializeId(stream, id);
 			if ((*id.scope) != Name::getNullName())
 			{
 				instance = ServiceProvider::create<IdManager>(this)->getInstance(id);
