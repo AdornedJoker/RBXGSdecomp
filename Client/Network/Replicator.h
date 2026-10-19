@@ -150,7 +150,11 @@ namespace RBX
 				int id;
 
 			public:
-				MarkerItem(Replicator&, int);
+				MarkerItem(Replicator& replicator, int id)
+					: Item(replicator),
+					  id(id)
+				{
+				}
 				virtual void write(RakNet::BitStream& bitStream);
 			};
 
@@ -290,7 +294,7 @@ namespace RBX
 			void sendPhysicsData(RakNet::BitStream&, const Assembly&);
 			void createStatsItems(Stats::StatsService* stats);
 			virtual bool remoteDeleteOnDisconnect(const Instance* instance) const;
-			void serializeValue(const Reflection::ConstProperty&, bool, RakNet::BitStream&);
+			void serializeValue(const Reflection::ConstProperty& property, bool includeLength, RakNet::BitStream& outBitStream);
 			void deserializeValue(RakNet::BitStream& inBitStream, bool lengthIncluded, Reflection::Property& property);
 			void skipValue(RakNet::BitStream&);
 			void receiveData(Packet* packet);
