@@ -10,6 +10,7 @@
 #include <boost/iostreams/filtering_stream.hpp>
 #include <boost/iostreams/copy.hpp>
 #include <boost/iostreams/filter/gzip.hpp>
+#include "util/standardout.h"
 
 class HttpRequest_source : public boost::iostreams::device<boost::iostreams::input>
 {
@@ -291,7 +292,16 @@ namespace RBX
 			h = additionalHeaders.c_str();
 
 		std::istringstream dummy;
-		httpGetPost<false>(url, dummy, false, h, response);
+
+		try
+		{
+			httpGetPost<false>(url, dummy, false, h, response);
+		}
+		catch (std::exception)
+		{
+			StandardOut::singleton()->print(MESSAGE_WARNING, "httpGet failed, trying again");
+			httpGetPost<false>(url, dummy, false, h, response);
+		}
 	}
 
 	void Http::post(std::istream& input, bool compress, std::string& response)
