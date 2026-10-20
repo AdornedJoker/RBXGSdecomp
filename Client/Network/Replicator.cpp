@@ -1087,8 +1087,6 @@ namespace RBX
 						}
 						receivedGlobals = true;
 						return RR_STOP_PROCESSING_AND_DEALLOCATE;
-					default:
-						break;
 					}
 				}
 				catch (std::exception& e)
