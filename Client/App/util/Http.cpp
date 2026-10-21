@@ -153,8 +153,8 @@ namespace RBX
 					}
 					catch (boost::iostreams::gzip_error& e)
 					{
-						int error =  e.zlib_error_code();
-						throw std::runtime_error(G3D::format("Upload GZip error %d, ZLib error %d, \"%s\"", e.error(), error, url.c_str()));
+						int error = e.error();
+						throw std::runtime_error(G3D::format("Upload GZip error %d, ZLib error %d, \"%s\"", error, e.zlib_error_code(), url.c_str()));
 					}
 
 					int headerLength = (int)uploadData.size();
